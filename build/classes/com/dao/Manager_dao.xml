@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.Manager_dao">
+
+	<select id="login" parameterType="Manager" resultType="Manager">
+		select *
+		from manager where id=#{id} and password=#{password}
+	</select>
+
+	<select id="get_foodInfo" resultType="Food">
+		select * from food
+	</select>
+
+	<delete id="delete_food" parameterType="String">
+		delete from food where
+		food_id=#{food_id}
+	</delete>
+
+	<insert id="add_food" parameterType="Food">
+		insert into food (food_name,
+		food_price, food_img) values (#{food_name}, #{food_price},
+		#{food_img})
+	</insert>
+
+	<update id="update_food" parameterType="food">
+		update food set
+		food_name=#{food_name},food_price=#{food_price},food_img=#{food_img}
+		where food_id=#{food_id}
+	</update>
+
+	<select id="get_tableInfo" resultType="Table">
+		select * from tables
+	</select>
+
+	<select id="get_formInfo" resultType="Form">
+		SELECT form.*,
+		form_food.food_id, food.food_name, amount
+		from form, form_food, food
+		WHERE form.order_id=form_food.order_id AND
+		form_food.food_id=food.food_id order by form.order_id,form_food.food_id
+		<!-- SELECT form.order_id, people_number,
+		table_id, evaluate, is_accounted, time,
+		sum, food_id, food_name, amount
+		FROM form
+		LEFT JOIN
+		(
+		SELECT form_food.*, food.food_name
+		FROM form_food
+		LEFT JOIN food
+		ON form_food.food_id=food.food_id
+		) as list
+		ON form.order_id=list.order_id -->
+	</select>
+	
+	<delete id="delete_table" parameterType="String">
+		delete from tables where
+		table_id=#{table_id}
+	</delete>
+	
+	<insert id="add_table" parameterType="String">
+		insert into tables (table_id, status, people_number) values (#{table_id}, "未占用", "0")
+	</insert>
+	
+	<delete id="delete_form_food" parameterType="String">
+		delete from form_food where order_id=#{order_id}
+	</delete>
+	
+	<delete id="delete_form" parameterType="String">
+		delete from form where order_id=#{order_id}
+	</delete>
+
+</mapper>

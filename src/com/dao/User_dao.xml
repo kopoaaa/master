@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.User_dao">
+
+	<select id="get_tables_number" resultType="Integer">
+		select table_id from tables where status="未占用";
+	</select>
+	
+	<insert id="show_menu" parameterType="Form">
+		insert into form (order_id,people_number, table_id, is_accounted) values(#{order_id},#{people_number}, #{table_id}, #{is_accounted})
+	</insert>
+
+	<select id="get_foodInfo" resultType="Food">
+		select * from food
+	</select>
+	
+	<select id="search" parameterType="Food" resultType="Food">
+		select * from food where food_name like CONCAT('%',#{food_name},'%')
+	</select>
+	
+	<select id="turn_personInfo" parameterType="Form" resultType="Form">
+		select * from form where order_id=#{order_id}
+	</select>
+	
+	<update id="update_form" parameterType="Form">
+		update form set sum=#{sum} where order_id=#{order_id}
+	</update>
+	
+	<update id="change_table_used">
+		update tables set status='已占用', people_number=#{param2} where table_id=#{param1}
+	</update>
+	
+	<update id="end_form" parameterType="String">
+		update form set is_accounted='已结账' where order_id=#{order_id}
+	</update>
+	
+	<update id="change_table_free" parameterType="String">
+		update tables set status='未占用', people_number='0' where table_id=#{table_id}
+	</update>
+	
+	<insert id="update_form_food">
+	 	insert into form_food (order_id, food_id, amount) values
+	 	<foreach collection="list" item="item" separator=",">
+	 		(#{item.order_id}, #{item.food_id}, #{item.amount})
+	 	</foreach>
+	</insert>
+</mapper>
