@@ -1,4 +1,4 @@
-package com.controller;
+﻿package com.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +50,7 @@ public class Manager_controller
 	@RequestMapping("/turn_manage_menu")//跳转至菜单管理界面
 	public String turn_manage_menu(Model model)
 	{
-		//访问数据库得到总菜谱信息，用于展示
+		//访问数据库得到总菜谱信息，用于展示hhhh
 		List<Food> food_list=manager_service.get_foodInfo();
 		model.addAttribute("menuList", food_list);
 		
