@@ -1,4 +1,4 @@
-package com.controller;
+﻿package com.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ public class User_controller
 		form.setIs_accounted("未结账");
 		user_service.show_menu(form); 
 		
-		//将当前订单所占用的餐桌的状态从“未占用”改为“已占用”
+		//将当前订单所占用的餐桌的状态从“未占用”改为“已占用”xxxxx
 		user_service.change_table_used(table_id, people_number); 
 		
 		//访问数据库得到总菜谱信息和用户选择信息，封装在model中传进jsp页面用于展示
